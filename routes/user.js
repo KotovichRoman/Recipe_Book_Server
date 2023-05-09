@@ -6,13 +6,14 @@ module.exports = function(app, database) {
             const { login, email, name, password } = req.body;
 
             const checkResult = await database.checkUserForUniqueness(login, email);
+            console.log(checkResult.rows[0].find_user_by_login_or_email);
             if (checkResult.rows[0].find_user_by_login_or_email) {
                 res.status(401).json({test: 'A user with the same login or email already exist'});
             }
             else {
                 const passwordHash = crypto.createHash('sha256').update(password).digest('hex');
                 const result = await database.registrationUser(login, email, name, passwordHash);
-
+                console.log(result);
                 if (result) {
                     res.status(200).json({text: 'User added successfully'});
                 } else {
