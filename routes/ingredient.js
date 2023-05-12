@@ -21,13 +21,13 @@ module.exports = function(app, database) {
         }
     });
 
-    app.put('/ingredient/:id', async (req, res) => {
+    app.delete('/ingredient/:id', async (req, res) => {
         const id = req.params.id;
         const { name } = req.body;
 
-        const result = await database.updateIngredient(id, name);
+        const result = await database.deleteIngredient(id, name);
         if (result) {
-            res.status(200).json({message: 'Successfully updated an ingredient'});
+            res.status(200).json({message: 'Successfully deleted an ingredient'});
         } else {
             res.status(401).json({message: 'Error updating an ingredient'});
         }

@@ -1,25 +1,25 @@
 const postgres = require('pg');
 
 class DB {
-    // constructor() {
-    //     this.pool = new postgres.Pool({
-    //         user: 'db_9k06_user',
-    //         host: 'dpg-ch14gfb3cv203bup33lg-a',
-    //         database: 'db_9k06',
-    //         password: 'TlMB32ghlgVWCPjeL4TdGecc0IiJHE9e',
-    //         port: 5432,
-    //     });
-    // }
-
     constructor() {
         this.pool = new postgres.Pool({
-            user: 'postgres',
-            host: 'localhost',
-            database: 'Recipe Book',
-            password: '614523',
+            user: 'db_9k06_user',
+            host: 'dpg-ch14gfb3cv203bup33lg-a',
+            database: 'db_9k06',
+            password: 'TlMB32ghlgVWCPjeL4TdGecc0IiJHE9e',
             port: 5432,
         });
     }
+
+    // constructor() {
+    //     this.pool = new postgres.Pool({
+    //         user: 'postgres',
+    //         host: 'localhost',
+    //         database: 'Recipe Book',
+    //         password: '614523',
+    //         port: 5432,
+    //     });
+    // }
 
     // users
     async checkUserForUniqueness(login, email) {
@@ -201,10 +201,10 @@ class DB {
         }
     }
 
-    async updateIngredient(id, name) {
+    async deleteIngredient(id) {
         try {
-            const queryText = 'call update_ingredient($1, $2)';
-            const values = [id, name];
+            const queryText = 'call update_ingredient($1';
+            const values = [id];
             await this.pool.query(queryText, values);
 
             return true;
