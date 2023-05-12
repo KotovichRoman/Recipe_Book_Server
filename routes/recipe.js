@@ -2,6 +2,7 @@ module.exports = function(app, database) {
     app.get('/recipes', async (req, res) => {
         try {
             const rows = await database.getAllPublicRecipes();
+            console.log(rows);
             res.status(200).send(rows);
         } catch (error) {
             console.error(error);
@@ -13,6 +14,7 @@ module.exports = function(app, database) {
         try {
             const userId = req.params.user_id;
             const rows = await database.getAllUserRecipes(userId);
+            console.log(rows);
             res.status(200).send(rows);
         } catch (error) {
             console.error(error);
@@ -24,6 +26,7 @@ module.exports = function(app, database) {
         try {
             const userId = req.params.user_id;
             const rows = await database.getAllUserPublicRecipes(userId);
+            console.log(rows);
             res.status(200).send(rows);
         } catch (error) {
             console.error(error);
@@ -47,11 +50,12 @@ module.exports = function(app, database) {
         const { title, description, is_public, owner_id, ingredientsId, weights } = req.body;
 
         const result = await database.addRecipe(title, description, Boolean(is_public), parseInt(owner_id), ingredientsId, weights);
-        console.log(ingredientsId);
 
         if (result) {
+            console.log(result);
             res.status(200).json({message: 'Successfully added a recipe'});
         } else {
+            console.log("Error");
             res.status(401).json({message: 'Error adding a recipe'});
         }
     });
@@ -80,11 +84,14 @@ module.exports = function(app, database) {
             const result = await database.deleteRecipe(id);
 
             if (result) {
+                console.log(result);
                 res.status(201).send('Recipe deleted successfully');
             } else {
+                console.log("Error");
                 res.status(500).send('Error deleting recipe');
             }
         } catch (error) {
+            console.log(error);
             res.status(500).send('Error updating recipe');
         }
     });

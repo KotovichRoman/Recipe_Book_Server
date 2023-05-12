@@ -1,12 +1,22 @@
 const postgres = require('pg');
 
 class DB {
+    // constructor() {
+    //     this.pool = new postgres.Pool({
+    //         user: 'db_9k06_user',
+    //         host: 'dpg-ch14gfb3cv203bup33lg-a',
+    //         database: 'db_9k06',
+    //         password: 'TlMB32ghlgVWCPjeL4TdGecc0IiJHE9e',
+    //         port: 5432,
+    //     });
+    // }
+
     constructor() {
         this.pool = new postgres.Pool({
-            user: 'db_9k06_user',
-            host: 'dpg-ch14gfb3cv203bup33lg-a',
-            database: 'db_9k06',
-            password: 'TlMB32ghlgVWCPjeL4TdGecc0IiJHE9e',
+            user: 'postgres',
+            host: 'localhost',
+            database: 'Recipe Book',
+            password: '614523',
             port: 5432,
         });
     }
@@ -40,8 +50,28 @@ class DB {
 
     async getUserByLogin(login) {
         try {
-            const result = await this.pool.query(`select find_user_by_login('${login}')`);
-            return result.rows[0];
+            const { rows } = await this.pool.query(`select * from get_user_by_login('${login}')`);
+            return rows;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    }
+
+    async getUserById(id) {
+        try {
+            const { rows } = await this.pool.query(`select * from get_user_by_id('${id}')`);
+            return rows;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    }
+
+    async getUsersById(usersId) {
+        try {
+            const { rows } = await this.pool.query(`select * from get_user_by_ids(array[${usersId}])`);
+            return rows;
         } catch (error) {
             console.log(error);
             return error;

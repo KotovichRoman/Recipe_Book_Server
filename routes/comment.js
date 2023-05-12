@@ -4,7 +4,9 @@ module.exports = function(app, database) {
             const recipeId = req.params.recipe_id;
 
             const rows = await database.getAllRecipeComments(recipeId);
-            res.status(200).send(rows);
+
+            console.log(rows);
+            res.status(200).json(rows);
         } catch (error) {
             console.error(error);
             res.status(500).send('Error getting comments');
